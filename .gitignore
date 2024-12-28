@@ -1,0 +1,15 @@
+# Ignore compiled files and executables
+*.exe
+*.out
+
+# Dependency caches
+/node_modules/
+/bin/
+/pkg/
+
+# Ignore environment files
+.env
+
+# System files
+.DS_Store
+Thumbs.db
