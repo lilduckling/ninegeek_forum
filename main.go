@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
@@ -29,6 +30,23 @@ var nextCommentID = 1
 
 func main() {
 	r := gin.Default()
+
+	// Enable CORS
+	r.Use(cors.Default())
+
+	// User login route
+	r.POST("/users/login", func(c *gin.Context) {
+		var json struct {
+			Username string `json:"username" binding:"required"`
+		}
+
+		if err := c.ShouldBindJSON(&json); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request"})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{"message": "User logged in", "username": json.Username})
+	})
 
 	// Create a new thread
 	r.POST("/threads", func(c *gin.Context) {
